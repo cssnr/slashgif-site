@@ -1,17 +1,18 @@
 import os
 import configparser
 
-STATIC_ROOT = '/var/www/slashgif.com'
-ALLOWED_HOSTS = ['slashgif.com', 'dev.slashgif.com']
-
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 CONFIG_FILE = os.path.join(BASE_DIR, 'settings.ini')
 
 config = configparser.ConfigParser()
 config.read(CONFIG_FILE)
 
-SECRET_KEY = config.get('App', 'secret')
+allowed_hosts = config.get('App', 'allowed_hosts')
+ALLOWED_HOSTS = allowed_hosts.split(' ')
+
 DEBUG = config.getboolean('App', 'debug')
+SECRET_KEY = config.get('App', 'secret')
+STATIC_ROOT = config.get('App', 'static_root')
 
 TEMPLATES_DIRS = [os.path.join(BASE_DIR, 'templates')]
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]

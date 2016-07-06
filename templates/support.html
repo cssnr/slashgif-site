@@ -4,22 +4,33 @@
 
 {% block body %}
 
-	<div>
-		<p>
-			If you are having issues using the SlashGIF service, please check the status page first:
-		</p>
-		<ul>
-			<li>
-				<strong>SlashGIF Status:</strong>
-				<a href="http://status.slashgif.com" title="SlashGIF Status" target="_blank">http://status.slashgif.com</a>
-			</li>
-		</ul>
-		<p>
-			If you still need assistance installing or using SlashGIF, please send an email to:
-		</p>
-		<ul>
-			<li><strong>Support Questions:</strong> <script type="text/javascript" src="{% static "js/email.js" %}"></script></li>
-		</ul>
+	<div class="row">
+		<div class="col-sm-offset-2 col-sm-8">
+			<h1>Support</h1>
+			<blockquote>
+
+				<p>
+					Please check the service status page before contacting support:
+				</p>
+				<ul>
+					<li>
+						<strong>SlashGIF Status:</strong>
+						<a href="http://status.slashgif.com" title="SlashGIF Status" target="_blank">http://status.slashgif.com</a>
+					</li>
+				</ul>
+
+				</blockquote>
+
+				<p>
+					If you are having issues installing or using the SlasGIF service, please contact us via email:
+				</p>
+
+					<p><strong>Contact E-Mail:</strong> <script type="text/javascript" src="{% static "js/email.js" %}"></script></p>
+
+
+		</div>
 	</div>
+
+
 
 {% endblock %}
