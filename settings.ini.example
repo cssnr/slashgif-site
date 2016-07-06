@@ -1,0 +1,14 @@
+[App]
+debug = True
+secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+[Logging]
+level = DEBUG
+file = /var/log/slashgifsite.log
+
+[Slack]
+oauth_uri      = https://slack.com/oauth/pick_reflow
+client_id      = 54467267554.54480474432
+oauth_scopes   = commands+bot+chat%3Awrite%3Abot
+slack_url      = https://slack.com/apps/A1LE4DYCQ-slash-gif
+
