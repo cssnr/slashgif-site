@@ -1,6 +1,9 @@
 [App]
 debug = True
 secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+allowed_hosts = slashgif.com dev.slashgif.com
+static_root = /var/www/slashgif.com
+site_uri = https://dev.slashgif.com
 
 [Logging]
 level = DEBUG
