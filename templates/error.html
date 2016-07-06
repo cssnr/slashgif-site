@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+{% block title %}Error{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-sm-offset-2 col-sm-8">
+			<div class="alert alert-danger">
+				<p><strong>Error!</strong></p>
+				<p>There was an error adding SlashGIF to your team's Slack.</p>
+				<p>If you need assistance, please contact the author at: <script type="text/javascript" src="{% static "js/email.js" %}"></script></p>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div>
+			<p><img src="{% static "images/success.gif" %}" class="img-responsive center-block" alt="Error Adding SlashGIF" /></p>
+		</div>
+	</div>
+
+{% endblock %}

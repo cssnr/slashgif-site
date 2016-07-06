@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+{% block title %}Support{% endblock %}
+
+{% block body %}
+
+	<div>
+		<p>
+			If you are having issues using the SlashGIF service, please check the status page first:
+		</p>
+		<ul>
+			<li>
+				<strong>SlashGIF Status:</strong>
+				<a href="http://status.slashgif.com" title="SlashGIF Status" target="_blank">http://status.slashgif.com</a>
+			</li>
+		</ul>
+		<p>
+			If you still need assistance installing or using SlashGIF, please send an email to:
+		</p>
+		<ul>
+			<li><strong>Support Questions:</strong> <script type="text/javascript" src="{% static "js/email.js" %}"></script></li>
+		</ul>
+	</div>
+
+{% endblock %}

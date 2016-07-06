@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+{% block title %}Success{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-sm-offset-2 col-sm-8">
+			<div class="alert alert-success">
+				<p><strong>Success!</strong></p>
+				<p>SlackGIF has been added to your team's Slack.</p>
+				<p>Thank you.</p>
+			</div>
+		</div>
+	</div>
+
+	<div class="row">
+		<div>
+			<p><img src="{% static "images/success.gif" %}" class="img-responsive center-block" alt="Successfully Added SlashGIF" /></p>
+		</div>
+	</div>
+
+{% endblock %}
