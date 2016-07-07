@@ -1,6 +1,6 @@
 {% extends "main.html" %}
 {% load staticfiles %}
-{% block title %}Random GIF Preview for Slack{% endblock %}
+{% block title %}Random GIF Search and Preview for Slack{% endblock %}
 
 {% block body %}
 
@@ -17,7 +17,7 @@
 			<div id="myTabContent" class="tab-content">
 				<div class="tab-pane fade active in" id="features">
 					<p>
-						Enables you to use the <mark>/gif</mark> command anyhwere in slack to express your emotions with an animation.
+						Adds the <mark>/gif</mark> command to your team's Slack for all public and private channels:
 					</p>
 					<ul>
 						<li><strong>All Public Channels:</strong> Allows you to preview your GIF before sending it to the channel.</li>
@@ -29,7 +29,7 @@
 						This app will modify your Slack in the following way:
 					</p>
 					<ul>
-						<li><strong>Add Slash Command:</strong> New slash command <mark>/gif</mark> will be added for searching GIF's.</li>
+						<li><strong>New Slash Command:</strong> New slash command <mark>/gif</mark> will be added for searching GIF's.</li>
 						<li><strong>Add BOT User:</strong> A Bot user @slashgif will be used when posting GIF's to public channels.</li>
 					</ul>
 				</div>
@@ -37,9 +37,9 @@
 					<p>
 						Inspired and powered by <a href="http://giphy.com/" target="_blank">Giphy</a>, SlashGIF allows you to
 						post GIF's to public channels in Slack, without accidentally posting an offensive image. Many people have
-						began using Giphy, but due to the random nature of searches combined with crowd sourced tags, this can produce
-						undesired results in enterprise environment. With SlashGIF, you never have to worry about unintentionally
-						posting questionable or NSFW GIF's in public channels anymore.
+						begun using Giphy, but due to the random nature of searches combined with crowd sourced tags, this can produce
+						undesired results in enterprise environments. With SlashGIF, you never have to worry about unintentionally
+						posting questionable or NSFW GIF's in public channels again.
 					</p>
 				</div>
 			</div>

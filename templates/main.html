@@ -56,16 +56,20 @@
 				<div class="panel panel-default">
 					<div class="panel-body">
 
-						<p class="pull-right text-right"><strong>{{ site_vars.SITE_AUTHOR }}</strong> |
-							<script type="text/javascript" src="{% static "js/email.js" %}"></script>
-						</p>
+						<div class="col-sm-6">
+							<p>
+								<a href="{% url "home" %}">Home</a> |
+								<a href="{% url "support" %}">Support</a> |
+								<a href="{% url "privacy" %}">Privacy Policy</a> |
+								<a href="{{ site_vars.SLACK_APP_URL }}" target="_blank">View at Slack</a>
+							</p>
+						</div>
 
-						<p>
-							<a href="{% url "home" %}">Home</a> |
-							<a href="{% url "support" %}">Support</a> |
-							<a href="{% url "privacy" %}">Privacy Policy</a> |
-							<a href="{{ site_vars.SLACK_APP_URL }}" target="_blank">View at Slack</a>
-						</p>
+						<div class="col-sm-6">
+							<p class="text-right"><strong>{{ site_vars.SITE_AUTHOR }}</strong> |
+								<script type="text/javascript" src="{% static "js/shane-email.js" %}"></script>
+							</p>
+						</div>
 
 					</div>
 				</div>
