@@ -15,6 +15,7 @@ urlpatterns = [
 	url(r'^$', home.home, name='home'),
 	url(r'^robots\.txt$', RedirectView.as_view(url=STATIC_URL + 'robots.txt')),
 	url(r'^favicon\.ico$', RedirectView.as_view(url=STATIC_URL + 'favicon.ico')),
+	url(r'^sitemap\.xml', RedirectView.as_view(url=STATIC_URL + 'sitemap.xml')),
 	url(r'^error/', home.error, name="error"),
 	url(r'^success/', home.success, name="success"),
 	url(r'^privacy/', home.privacy, name="privacy"),
