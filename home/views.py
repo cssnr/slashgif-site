@@ -17,6 +17,14 @@ def home(request):
 	return render(request, 'home.html')
 
 
+def support(request):
+	return render(request, 'support.html')
+
+
+def privacy(request):
+	return render(request, 'privacy.html')
+
+
 def success(request):
 	return render(request, 'success.html')
 
@@ -25,9 +33,5 @@ def error(request):
 	return render(request, 'error.html')
 
 
-def privacy(request):
-	return render(request, 'privacy.html')
-
-
-def support(request):
-	return render(request, 'support.html')
+def cancel(request):
+	return render(request, 'cancel.html')

@@ -1,0 +1,60 @@
+{% extends "main.html" %}
+{% load staticfiles %}
+{% load variables %}
+{% site_vars as site_vars %}
+{% block title %}Cancelled{% endblock %}
+
+{% block body %}
+
+	<div class="row">
+		<div class="col-sm-offset-2 col-sm-8">
+
+			<div class="alert alert-info">
+				<p><strong>Installation Cancelled.</strong></p>
+				<p>The SlashGIF installation process has been cancelled.</p>
+				<p>
+					To try the installation again, please follow this link:
+					<strong><a href="{{ site_vars.OAUTH_URI }}" title="Install SlashGIF">Install SlashGIF</a></strong>
+				</p>
+				<p>
+					If you have any questions or concerns, please send feedback to:
+					<strong><script type="text/javascript" src="{% static "js/feedback-email.js" %}"></script></strong>
+				</p>
+			</div>
+
+			<h1>More Information</h1>
+			<blockquote>
+
+				<p>
+					Our Privacy Policy is made available here:
+				</p>
+
+				<ul>
+					<li>
+						<strong><a href="{% url "privacy" %}" title="Privacy Policy">Privacy Policy</a></strong>
+					</li>
+				</ul>
+
+				<p>
+					Our support page and contacts can be found here:
+				</p>
+
+				<ul>
+					<li>
+						<strong><a href="{% url "support" %}" title="Support">Support</a></strong>
+					</li>
+				</ul>
+
+
+				</blockquote>
+
+		</div>
+	</div>
+
+	<div class="row">
+		<div>
+			<p><img src="{% static "images/gifs/cancel.gif" %}" class="img-responsive center-block" alt="Kitten" /></p>
+		</div>
+	</div>
+
+{% endblock %}
