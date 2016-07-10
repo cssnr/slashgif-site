@@ -1,15 +1,9 @@
 from django.conf.urls import url
 from django.views.generic.base import RedirectView
 from django.contrib import admin
-import configparser
-from slashgif_site.settings import CONFIG_FILE
 from slashgif_site.settings import STATIC_URL
 import home.views as home
 
-config = configparser.ConfigParser()
-config.read(CONFIG_FILE)
-
-slack_app_url = config.get('Slack', 'slack_url')
 
 urlpatterns = [
 	url(r'^$', home.home, name='home'),
@@ -21,6 +15,7 @@ urlpatterns = [
 	url(r'^success/', home.success, name="success"),
 	url(r'^error/', home.error, name="error"),
 	url(r'^cancel/', home.cancel, name="cancel"),
-	url(r'^slack/', RedirectView.as_view(url=slack_app_url), name="slack"),
+	url(r'^addtoslack/', home.addtoslack, name="addtoslack"),
+	url(r'^callback/', home.callback),
 	url(r'^admin/', admin.site.urls, name="django_admin"),
 ]

@@ -10,8 +10,13 @@ level = DEBUG
 file = /var/log/slashgifsite.log
 
 [Slack]
-oauth_uri      = https://slack.com/oauth/pick_reflow
-client_id      = 54467267554.54480474432
-oauth_scopes   = commands+bot+chat%3Awrite%3Abot
-slack_url      = https://slack.com/apps/A1LE4DYCQ-slash-gif
+oauth_url      = https://slack.com/oauth/pick_reflow
+client_id      = 2214938173.54317488916
+client_secret  = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+redirect_uri   = https://dev.slashgif.com/callback/
+oauth_scopes   = commands
+slack_app_url  = https://slack.com/apps/A1L9BECSY-slashgif-dev
 
+[Discord]
+carl_token = xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+alert_channel = 000000000000000000

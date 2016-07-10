@@ -45,7 +45,7 @@
 				</a>
 				<h1>{{ site_vars.SITE_TITLE }}</h1>
 				<p class="lead">Preview Your <mark>/gif</mark> Before Posting it Publicly...</p>
-				<p><a href="{{ site_vars.OAUTH_URI }}">
+				<p><a href="{% url "addtoslack" %}">
 					<img src="{% static "images/add_to_slack.png" %}" alt="Add to Slack" />
 				</a></p>
 			</div>
