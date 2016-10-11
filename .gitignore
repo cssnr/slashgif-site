@@ -1,0 +1,8 @@
+# files
+settings.ini
+db.sqlite3
+*.pyc
+
+# directories
+venv/
+__pycache__/
