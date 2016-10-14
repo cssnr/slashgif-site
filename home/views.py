@@ -16,10 +16,9 @@ log_level = config.get('Logging', 'level')
 logging_level = logging.getLevelName(log_level)
 logging.basicConfig(filename=log_file, level=logging_level)
 
-DISCORD_INSTALL_SUCCESS = ':white_check_mark: **SlashGIF**: Successful Install'
-DISCORD_INSTALL_ERROR = ':no_entry: **SlashGIF**: Installation Attempt Failure'
-DISCORD_CARL_TOKEN = config.get('Discord', 'carl_token')
-DISCORD_ALERT_CHANNEL = config.get('Discord', 'alert_channel')
+DISCORD_INSTALL_SUCCESS = ':white_check_mark: Successful Install'
+DISCORD_INSTALL_ERROR = ':no_entry: **WARNING**: Installation Attempt Failure...'
+DISCORD_HOOK_URI = config.get('Discord', 'hook_uri')
 
 OAUTH_URL = config.get('Slack', 'oauth_url')
 CLIENT_ID = config.get('Slack', 'client_id')
@@ -105,12 +104,13 @@ def send_oauth(oauth_code):
 
 def send_discord(message):
 	"""
-	Send Discord message
+	Send Discord Message
 	"""
 	try:
-		uri = 'https://discordapp.com/api/channels/%s/messages' % (DISCORD_ALERT_CHANNEL)
-		headers = {'Authorization': DISCORD_CARL_TOKEN}
-		payload = {'content': message}
-		requests.post(uri, headers=headers, data=payload, timeout=3)
-	except Exception:
-		pass
+		headers = {'Content-Type': 'application/json'}
+		body = {'content': message}
+		requests.post(DISCORD_HOOK_URI, data=json.dumps(body), headers=headers, timeout=3)
+		return
+	except Exception as error:
+		logging.info(error)
+		return

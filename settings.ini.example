@@ -18,5 +18,4 @@ oauth_scopes   = commands
 slack_app_url  = https://slack.com/apps/A1L9BECSY-slashgif-dev
 
 [Discord]
-carl_token = xxxxxxxxxxxxxxxxxxxxxxxx.xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-alert_channel = 000000000000000000
+hook_uri = https://discordapp.com/api/webhooks/0000000000/XXXXXXXXXX
