@@ -1,8 +1,10 @@
-# files
-settings.ini
-db.sqlite3
-*.pyc
-
-# directories
-venv/
+.idea/
+*.iml
+.coverage
+coverage.xml
 __pycache__/
+*.pyc
+venv/
+*.log
+settings.ini
+*.sqlite3
