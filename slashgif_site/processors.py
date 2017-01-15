@@ -1,4 +1,3 @@
-import os
 from slashgif_site.settings import config
 
 SITE_TITLE = 'SlashGIF'
