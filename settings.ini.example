@@ -2,12 +2,10 @@
 debug = True
 secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
 allowed_hosts = slashgif.com dev.slashgif.com
-static_root = /var/www/slashgif.com
 site_uri = https://dev.slashgif.com
-
-[Logging]
-level = DEBUG
-file = /var/log/slashgifsite.log
+static_root = /var/www/slashgif.com
+log_level = DEBUG
+log_file = /var/log/slashgifsite.log
 
 [Slack]
 oauth_url      = https://slack.com/oauth/pick_reflow
