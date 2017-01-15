@@ -4,4 +4,4 @@
 
 [![coverage report](https://git.cssnr.com/shane/slashgif_site/badges/master/coverage.svg)](https://git.cssnr.com/shane/slashgif_site/commits/master)
 
-Updates to follow...
+https://hosted-domains.slack.com/apps/A1LE4DYCQ-slashgif
