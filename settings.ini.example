@@ -1,11 +1,12 @@
 [App]
-debug = True
-secret = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-allowed_hosts = slashgif.com dev.slashgif.com
-site_uri = https://dev.slashgif.com
-static_root = /var/www/slashgif.com
-log_level = DEBUG
-log_file = /var/log/slashgifsite.log
+debug          = True
+secret         = xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+allowed_hosts  = slashgif.com dev.slashgif.com
+site_uri       = https://dev.slashgif.com
+static_root    = /var/www/slashgif.com
+log_level      = DEBUG
+log_file       = /var/log/slashgif.com/django.log
+stats_file     = /var/log/slashgif.com/stats.log
 
 [Slack]
 oauth_url      = https://slack.com/oauth/pick_reflow
@@ -16,4 +17,4 @@ oauth_scopes   = commands
 slack_app_url  = https://slack.com/apps/A1L9BECSY-slashgif-dev
 
 [Discord]
-hook_uri = https://discordapp.com/api/webhooks/0000000000/XXXXXXXXXX
+hook_uri       = https://discordapp.com/api/webhooks/0000000000/XXXXXXXXXX

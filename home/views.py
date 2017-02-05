@@ -6,7 +6,8 @@ from django.http import HttpResponseRedirect
 from django.shortcuts import render
 from slashgif_site.settings import config
 
-logger = logging.getLogger(__name__)
+logger = logging.getLogger('slashgif')
+stats = logging.getLogger('stats')
 
 DISCORD_INSTALL_SUCCESS = ':white_check_mark: Successful Install'
 DISCORD_INSTALL_ERROR = ':no_entry: **WARNING**: Installation Failure.'
@@ -51,6 +52,7 @@ def callback(request):
     """
     try:
         if request.GET['error'] == 'access_denied':
+            stats.info('CANCEL - Install Aborted')
             return HttpResponseRedirect(reverse('cancel'))
     except Exception:
         pass
@@ -67,6 +69,7 @@ def callback(request):
     if oauth_response['ok']:
         try:
             team_id = oauth_response['team_id']
+            stats.info('SUCCESS - Install Successful')
             install_success_message = '%s (ID: %s)' % (
                 DISCORD_INSTALL_SUCCESS, team_id
             )
@@ -74,7 +77,8 @@ def callback(request):
             return HttpResponseRedirect(reverse('success'))
 
         except Exception as error:
-            logger.error(error)
+            logger.exception(error)
+            stats.info('FAILURE - Install Error: %s' % error)
             send_discord(DISCORD_INSTALL_ERROR)
             return HttpResponseRedirect(reverse('error'))
 
