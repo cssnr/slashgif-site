@@ -1,4 +1,5 @@
 import configparser
+import logging
 import os
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -27,53 +28,13 @@ USE_I18N = True
 USE_L10N = True
 USE_TZ = True
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'standard': {
-            'format': '%(asctime)s - '
-                      '%(levelname)s %(module)s.%(funcName)s %(lineno)d - '
-                      '%(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-        'stats': {
-            'format': '%(asctime)s - %(message)s',
-            'datefmt': '%Y-%m-%d %H:%M:%S'
-        },
-    },
-    'handlers': {
-        'logfile': {
-            'level': config.get('App', 'log_level'),
-            'class': 'logging.FileHandler',
-            'filename': config.get('App', 'log_file'),
-            'formatter': 'standard',
-        },
-        'statfile': {
-            'level': 'INFO',
-            'class': 'logging.FileHandler',
-            'filename': config.get('App', 'stats_file'),
-            'formatter': 'stats',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['logfile'],
-            'level': config.get('App', 'log_level'),
-            'propagate': True,
-        },
-        'slashgif': {
-            'handlers': ['logfile'],
-            'level': config.get('App', 'log_level'),
-            'propagate': True,
-        },
-        'stats': {
-            'handlers': ['statfile'],
-            'level': 'INFO',
-            'propagate': True,
-        },
-    }
-}
+logging.basicConfig(
+    filename=config.get('App', 'log_file'),
+    level=config.get('App', 'log_level'),
+    format='%(asctime)s - '
+           '%(levelname)s %(module)s.%(funcName)s %(lineno)d - '
+           '%(message)s',
+)
 
 DATABASES = {
     'default': {
