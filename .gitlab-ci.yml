@@ -4,7 +4,6 @@ before_script:
   - python -m pip install --upgrade pip
   - python -m pip install -r requirements.txt
   - python -m pip install flake8
-  - mkdir -p /var/log/slashgif.com
 
 django-test:
   stage: test
