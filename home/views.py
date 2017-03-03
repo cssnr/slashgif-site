@@ -57,7 +57,7 @@ def callback(request):
     """
     try:
         if request.GET['error'] == 'access_denied':
-            stats.incr('cancel')
+            add_stat('cancel')
             return HttpResponseRedirect(reverse('cancel'))
     except Exception:
         pass
@@ -74,7 +74,7 @@ def callback(request):
     if oauth_response['ok']:
         try:
             team_id = oauth_response['team_id']
-            stats.incr('success')
+            add_stat('success')
             install_success_message = '%s (ID: %s)' % (
                 DISCORD_INSTALL_SUCCESS, team_id
             )
@@ -83,7 +83,7 @@ def callback(request):
 
         except Exception as error:
             logger.exception(error)
-            stats.incr('failure')
+            add_stat('failure')
             send_discord(DISCORD_INSTALL_ERROR)
             return HttpResponseRedirect(reverse('error'))
 
@@ -123,3 +123,14 @@ def send_discord(message):
     except Exception as error:
         logger.info(error)
         return
+
+
+def add_stat(metric_name):
+    """
+    Add Metric
+    """
+    metric = '{0}.{1}'.format(
+        config.get('Stats', 'metric_prefix'),
+        metric_name,
+    )
+    stats.incr(metric)
