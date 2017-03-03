@@ -10,7 +10,7 @@ log_file       = django.log
 [Stats]
 metric_host    = graphite.cssnr.com
 metric_port    = 8125
-metric_prefix  = slashgif.dev.site
+metric_prefix  = slashgif.site.dev
 
 [Slack]
 oauth_url      = https://slack.com/oauth/pick_reflow
