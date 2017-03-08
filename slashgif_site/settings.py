@@ -8,9 +8,7 @@ CONFIG_FILE = os.path.join(BASE_DIR, 'settings.ini')
 config = configparser.ConfigParser()
 config.read(CONFIG_FILE)
 
-allowed_hosts = config.get('App', 'allowed_hosts')
-ALLOWED_HOSTS = allowed_hosts.split(' ')
-
+ALLOWED_HOSTS = config.get('App', 'allowed_hosts').split(' ')
 SECRET_KEY = config.get('App', 'secret')
 DEBUG = config.getboolean('App', 'debug')
 

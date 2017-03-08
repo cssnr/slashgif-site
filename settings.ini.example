@@ -22,3 +22,12 @@ slack_app_url  = https://slack.com/apps/A1L9BECSY-slashgif-dev
 
 [Discord]
 hook_uri       = https://discordapp.com/api/webhooks/0000000000/XXXXXXXXXX
+
+[Text]
+install_success   = :white_check_mark: Successful Install
+install_failure   = :no_entry: **WARNING**: Installation Failure.
+
+meta_title        = SlashGIF
+meta_author       = Shane Rice
+meta_description  = Search For and Preview Random GIFs Before Posting to Slack.
+meta_keywords     = GIF search,random GIF,Slack GIF,GIF Preview,Slash GIF,SlashGIF,GIF,GIFS,Giphy,Slack
