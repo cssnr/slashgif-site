@@ -14,9 +14,6 @@ stats = statsd.StatsClient(
     config.getint('Stats', 'metric_port'),
 )
 
-DISCORD_INSTALL_SUCCESS = ':white_check_mark: Successful Install'
-DISCORD_INSTALL_ERROR = ':no_entry: **WARNING**: Installation Failure.'
-
 
 def home(request):
     return render(request, 'home.html')
@@ -76,7 +73,7 @@ def callback(request):
             team_id = oauth_response['team_id']
             add_stat('success')
             install_success_message = '%s (ID: %s)' % (
-                DISCORD_INSTALL_SUCCESS, team_id
+                config.get('Text', 'install_success'), team_id
             )
             send_discord(install_success_message)
             return HttpResponseRedirect(reverse('success'))
@@ -84,7 +81,7 @@ def callback(request):
         except Exception as error:
             logger.exception(error)
             add_stat('failure')
-            send_discord(DISCORD_INSTALL_ERROR)
+            send_discord(config.get('Text', 'install_failure'))
             return HttpResponseRedirect(reverse('error'))
 
     else:
