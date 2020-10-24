@@ -1,0 +1,28 @@
+{% extends "main.html" %}
+{% block title %}Privacy Policy{% endblock %}
+{% load static %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+        <h1>Privacy Policy</h1>
+        <p>SlashGIF does <strong>not</strong> collect or store any information about commands, searches or
+            usage statistics. Additionally, no personally identifiable information, usernames or
+            email addresses are collected or stored. </p>
+        <p>SlashGIF does not provide, tag, or have any responsibility for the images posted by this App.
+            All images are sourced from publicly available API's which can change at any time without notice.</p>
+        <p>By adding SlashGIF to your Slack service, you acknowledge that you understand that SlashGIF
+            is not responsible for any of the images posted by this App or individuals on your team.</p>
+        <p>If you have any questions or concerns, please send feedback to:</p>
+        <ul><li>
+            <strong>Feedback:</strong>
+            <script type="text/javascript" src="{% static "main/email/feedback-email.js" %}"></script>
+        </li></ul>
+        <p><img src="{% static "images/gifs/privacy.gif" %}"
+                class="img-responsive mx-auto d-block"
+                alt="Privacy Policy"></p>
+    </div>
+</div>
+
+{% endblock %}

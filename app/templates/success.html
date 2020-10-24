@@ -1,0 +1,23 @@
+{% extends "main.html" %}
+{% block title %}Install Success{% endblock %}
+{% load static %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+        <div class="alert alert-success">
+            <h4>Success!</h4>
+            <p>SlackGIF has been added to your team's Slack.</p>
+            <p>Please send any feedback or suggestions to:
+                <strong><script type="text/javascript" src="{% static "main/email/feedback-email.js" %}"></script></strong></p>
+            <p>If you need additional assistance, please contact support at:
+                <strong><script type="text/javascript" src="{% static "main/email/support-email.js" %}"></script></strong></p>
+        </div>
+        <p><img src="{% static "images/gifs/success.gif" %}"
+                class="img-responsive mx-auto d-block"
+                alt="Successfully Added SlashGIF"></p>
+    </div>
+</div>
+
+{% endblock %}
