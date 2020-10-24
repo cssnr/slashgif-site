@@ -1,10 +1,9 @@
 .idea/
 *.iml
-.coverage
-coverage.xml
-__pycache__/
+**/venv/
+**/__pycache__/
 *.pyc
-venv/
+.coverage
 *.log
-settings.ini
 *.sqlite3
+settings.env

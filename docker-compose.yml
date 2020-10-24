@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  nginx:
+    build: ./nginx
+    image: shane-slashgif-site-nginx:latest
+    env_file: settings.env
+    deploy:
+      mode: global
+    volumes:
+      - data_dir:/data
+    depends_on:
+      - app
+    secrets:
+      - source: cssnr.com.crt
+        target: /etc/ssl/cssnr.com.crt
+      - source: cssnr.com.key
+        target: /etc/ssl/cssnr.com.key
+    ports:
+      - "443:443"
+
+  app:
+    build: ./app
+    image: shane-slashgif-site-app:latest
+    env_file: settings.env
+    command: "gunicorn slashgif_site.wsgi:application -w 2 -b 0.0.0.0:9000"
+    deploy:
+      mode: global
+    volumes:
+      - data_dir:/data
+
+secrets:
+  cssnr.com.crt:
+    file: /etc/ssl/cssnr.com.crt
+  cssnr.com.key:
+    file: /etc/ssl/cssnr.com.key
+
+volumes:
+  data_dir:

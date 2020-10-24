@@ -1,0 +1,85 @@
+{% load static %}
+{% load home_tags %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    {% get_config "DEBUG" as debug_enabled %}{% if debug_enabled %}<meta name="robots" content="noindex, nofollow">{% endif %}
+
+    <title>SlashGIF - {% block title %}{% endblock %}</title>
+    <link rel="icon" href="{% static "images/favicon.ico" %}">
+
+    {% block meta %}
+    <meta name="author" content="Shane Rice">
+    <meta name="title" content="SlashGIF">
+    <meta name="description" content="Search For and Preview Random GIFs Before Posting to Slack.">
+    <meta name="keywords" content="GIF search,random GIF,Slack GIF,GIF Preview,Slash GIF,SlashGIF,GIF,GIFS,Giphy,Slack">
+
+    <meta property="og:author" content="Shane Rice">
+    <meta property="og:title" content="SlashGIF">
+    <meta property="og:description" content="Search For and Preview Random GIFs Before Posting to Slack.">
+
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'home' %}">
+    <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'images/slashgif.png' %}">
+    <meta property="og:image:type" content="image/png">
+    {% endblock %}
+
+    <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
+    <link rel="stylesheet" href="{% static "main/css/main.css" %}">
+
+    <meta name="google-site-verification" content="iH7unLdA7YG00zwgr9qzjNIsBZrVReR_IrwwDWhwSHM">
+
+    {% block head %}{% endblock %}
+</head>
+<body>
+
+<div class="container">
+    {% block header %}
+    <div class="jumbotron mt-2">
+        <a href="{% url 'home' %}" title="SlashGIF">
+            <img height="128" width="128" src="{% static "images/slashgif.png" %}"
+                 class="float-right" alt="SlashGIF"></a>
+        <h1>SlashGIF</h1>
+        <p class="h4">Random GIF Search and Preview for Slack...</p>
+        <p><a href="{% url "addtoslack" %}">
+            <img src="{% static "images/add_to_slack.png" %}" alt="Add to Slack">
+        </a></p>
+    </div>
+    {% endblock %}
+
+    {% block body %}{% endblock %}
+
+    {% block footer %}
+    <div class="card mt-3">
+        <div class="card-body">
+            <div class="row">
+                <div class="col-sm-6">
+                    <p>
+                        <a href="{% url "home" %}">Home</a> |
+                        <a href="{% url "support" %}">Support</a> |
+                        <a href="{% url "privacy" %}">Privacy Policy</a> |
+                        <a href="{% get_config 'SLACK_APP_URL' %}" target="_blank">View at Slack</a>
+                    </p>
+                </div>
+
+                <div class="col-sm-6">
+                    <p class="text-right"><strong>Shane Rice</strong> |
+                        <script type="text/javascript" src="{% static "main/email/shane-email.js" %}"></script>
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+    {% endblock %}
+</div>
+
+<script type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
+<script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+
+{% block tail %}{% endblock %}
+
+</body>
+</html>

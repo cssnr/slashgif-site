@@ -1,0 +1,7 @@
+django>=3,<4
+django-extensions>=3,<4
+django-statsd-mozilla
+gunicorn
+requests
+statsd
+Werkzeug

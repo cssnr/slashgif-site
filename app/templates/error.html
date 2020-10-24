@@ -1,0 +1,25 @@
+{% extends "main.html" %}
+{% block title %}Install Error{% endblock %}
+{% load static %}
+{% load home_tags %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+        <div class="alert alert-danger">
+            <h4>Error!</h4>
+            <p>There was an error adding SlashGIF to your team's Slack.</p>
+            <p>Please check the Service Status page here:
+                <strong><a href="{% get_config 'STATUS_SITE' %}" title="SlashGIF Service Status">
+                    {% get_config 'STATUS_SITE' %}</a></strong></p>
+            <p>If you continue to receive this error, contact support at:
+                <strong><script type="text/javascript" src="{% static "main/email/support-email.js" %}"></script></strong></p>
+        </div>
+        <p><img src="{% static "images/gifs/error.gif" %}"
+                class="img-responsive mx-auto d-block"
+                alt="Error Adding SlashGIF"></p>
+    </div>
+</div>
+
+{% endblock %}

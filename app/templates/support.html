@@ -1,0 +1,36 @@
+{% extends "main.html" %}
+{% block title %}Support{% endblock %}
+{% load static %}
+{% load home_tags %}
+
+{% block body %}
+
+<div class="row">
+    <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+        <h1>Support</h1>
+        <p class="h6">Please check the service status page before contacting support:</p>
+        <ul><li>
+            <strong>SlashGIF Status Page:</strong>
+            <a href="{% get_config 'STATUS_SITE' %}" title="SlashGIF Status">{% get_config 'STATUS_SITE' %}</a>
+        </li></ul>
+        <hr>
+        <p>If everything is online and you are still having issues installing or using the SlashGIF service,
+            please contact support via email:</p>
+        <ul><li>
+            <strong>Support: </strong>
+            <script type="text/javascript" src="{% static "main/email/support-email.js" %}"></script>
+        </li></ul>
+        <p>Please send any general questions, comments, concerns or feedback to:</p>
+        <ul><li>
+            <strong>Feedback:
+            </strong><script type="text/javascript" src="{% static "main/email/feedback-email.js" %}"></script>
+        </li></ul>
+        <p>You may also provide feedback directly from Slack using the <mark>/giffeedback</mark> command.<br>
+            <em>Note: This is anonymous unless you include identifying information with your feedback.</em></p>
+        <p><img src="{% static "images/gifs/support.gif" %}"
+                class="img-fluid mx-auto d-block"
+                alt="Help..."></p>
+    </div>
+</div>
+
+{% endblock %}
