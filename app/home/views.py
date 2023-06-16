@@ -34,7 +34,7 @@ def cancel_view(request):
     return render(request, 'cancel.html')
 
 
-def addtoslack(request):
+def add_to_slack(request):
     uri = '%s?client_id=%s&scope=%s' % (
         settings.SLACK_OAUTH_URL,
         settings.SLACK_CLIENT_ID,

@@ -9,6 +9,6 @@ urlpatterns = [
     path('success/', home.success_view, name='success'),
     path('error/', home.error_view, name='error'),
     path('cancel/', home.cancel_view, name='cancel'),
-    path('addtoslack/', home.addtoslack, name='addtoslack'),
+    path('addtoslack/', home.add_to_slack, name='addtoslack'),
     path('callback/', home.callback, name='callback'),
 ]

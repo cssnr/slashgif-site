@@ -1,74 +1,43 @@
-import os
-from distutils.util import strtobool
+from decouple import config, Csv
+from django.contrib.messages import constants as message_constants
+from pathlib import Path
 
-ROOT_URLCONF = 'home.urls'
+BASE_DIR = Path(__file__).resolve().parent.parent
+SECRET_KEY = config('DJANGO_SECRET_KEY')
+DEBUG = config('DJANGO_DEBUG', 'False', bool)
+ALLOWED_HOSTS = config('DJANGO_ALLOWED', '*', Csv())
+SESSION_COOKIE_AGE = config('DJANGO_SESSION', 3600 * 24 * 14, int)
+
 WSGI_APPLICATION = 'slashgif_site.wsgi.application'
-
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-DATA_DIR = os.environ['DJANGO_DATA_DIR']
+ROOT_URLCONF = 'home.urls'
 
 LOGIN_URL = '/oauth/'
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
-TEMPLATES_DIRS = [os.path.join(BASE_DIR, 'templates')]
+STATIC_ROOT = config('DJANGO_STATIC_DIR')
+STATICFILES_DIRS = [BASE_DIR / 'static']
+TEMPLATES_DIRS = [BASE_DIR / 'templates']
 
-SESSION_COOKIE_AGE = int(os.getenv('DJANGO_SESSION', 1209600))
-ALLOWED_HOSTS = os.getenv('DJANGO_ALLOWED', '*').strip('"').split(' ')
-DEBUG = strtobool(os.getenv('DJANGO_DEBUG', 'True'))
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY')
-STATIC_ROOT = os.getenv('DJANGO_STATIC_DIR')
-
-DATETIME_FORMAT = os.getenv('DATETIME_FORMAT', 'N j, Y, f A').strip('"')
-TIME_ZONE = os.getenv('TZ', 'America/Los_Angeles')
-LANGUAGE_CODE = os.getenv('DJANGO_LANGUAGE_CODE', 'en-us')
-
-STATSD_PREFIX = os.getenv('STATSD_PREFIX', 'smwcweb.dev')
-STATSD_PORT = int(os.getenv('STATSD_PORT', 8125))
-STATSD_HOST = os.getenv('STATSD_HOST', 'localhost')
-STATSD_CLIENT = 'django_statsd.clients.toolbar'
-
-SLACK_OAUTH_URL = os.getenv('SLACK_OAUTH_URL')
-SLACK_ACCESS_URL = os.getenv('SLACK_ACCESS_URL')
-SLACK_CLIENT_ID = os.getenv('SLACK_CLIENT_ID')
-SLACK_CLIENT_SECRET = os.getenv('SLACK_CLIENT_SECRET')
-SLACK_REDIRECT_URI = os.getenv('SLACK_REDIRECT_URI')
-SLACK_OAUTH_SCOPES = os.getenv('SLACK_OAUTH_SCOPES')
-SLACK_APP_URL = os.getenv('SLACK_APP_URL')
-
-STATUS_SITE = os.getenv('STATUS_SITE')
-DISCORD_HOOK_URL = os.getenv('DISCORD_HOOK_URL')
-
+LANGUAGE_CODE = config('DJANGO_LANGUAGE_CODE', 'en-us')
+USE_TZ = config('USE_TZ', 'True', bool)
+TIME_ZONE = config('TZ', 'UTC')
 USE_I18N = True
 USE_L10N = True
-USE_TZ = True
 
-LOGGING = {
-    'version': 1,
-    'disable_existing_loggers': False,
-    'formatters': {
-        'standard': {
-            'format': '%(asctime)s - %(levelname)s - %(filename)s %(module)s.%(funcName)s:%(lineno)d - %(message)s'
-        },
-    },
-    'handlers': {
-        'console': {
-            'class': 'logging.StreamHandler',
-            'formatter': 'standard',
-        },
-    },
-    'loggers': {
-        'django': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
-            'propagate': True,
-        },
-        'app': {
-            'handlers': ['console'],
-            'level': os.getenv('DJANGO_APP_LOG_LEVEL', 'DEBUG'),
-            'propagate': True,
-        },
-    },
-}
+STATSD_PREFIX = config('STATSD_PREFIX', 'slashgif.site.dev')
+STATSD_PORT = config('STATSD_PORT', 8125, int)
+STATSD_HOST = config('STATSD_HOST', 'localhost')
+STATSD_CLIENT = 'django_statsd.clients.toolbar'
+
+SLACK_OAUTH_URL = config('SLACK_OAUTH_URL')
+SLACK_ACCESS_URL = config('SLACK_ACCESS_URL')
+SLACK_CLIENT_ID = config('SLACK_CLIENT_ID')
+SLACK_CLIENT_SECRET = config('SLACK_CLIENT_SECRET')
+SLACK_REDIRECT_URI = config('SLACK_REDIRECT_URI')
+SLACK_OAUTH_SCOPES = config('SLACK_OAUTH_SCOPES')
+SLACK_APP_URL = config('SLACK_APP_URL')
+
+STATUS_SITE = config('STATUS_SITE')
+DISCORD_HOOK_URL = config('DISCORD_HOOK_URL')
 
 INSTALLED_APPS = [
     'django.contrib.contenttypes',
@@ -97,3 +66,35 @@ TEMPLATES = [
         },
     },
 ]
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'formatters': {
+        'standard': {
+            'format': ('%(asctime)s - '
+                       '%(levelname)s - '
+                       '%(filename)s '
+                       '%(module)s.%(funcName)s:%(lineno)d - '
+                       '%(message)s'),
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'formatter': 'standard',
+        },
+    },
+    'loggers': {
+        'django': {
+            'handlers': ['console'],
+            'level': config('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+        'app': {
+            'handlers': ['console'],
+            'level': config('APP_LOG_LEVEL', 'DEBUG'),
+            'propagate': True,
+        },
+    },
+}
