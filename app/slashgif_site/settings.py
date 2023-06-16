@@ -9,7 +9,7 @@ ALLOWED_HOSTS = config('DJANGO_ALLOWED', '*', Csv())
 SESSION_COOKIE_AGE = config('DJANGO_SESSION', 3600 * 24 * 14, int)
 
 WSGI_APPLICATION = 'slashgif_site.wsgi.application'
-ROOT_URLCONF = 'home.urls'
+ROOT_URLCONF = 'slashgif_site.urls'
 
 LOGIN_URL = '/oauth/'
 STATIC_URL = '/static/'

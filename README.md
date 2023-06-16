@@ -5,6 +5,6 @@
 
 ## Frameworks
 
-- Django (4.x) https://www.djangoproject.com/
-- Bootstrap (4.x) http://getbootstrap.com/
-- JQuery (3.x) https://jquery.com/
+- Django (4.2.x) https://www.djangoproject.com/
+- Bootstrap (5.3.x) http://getbootstrap.com/
+- JQuery (3.7.x) https://jquery.com/
