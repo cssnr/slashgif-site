@@ -13,19 +13,20 @@
     <link rel="icon" href="{% static "images/favicon.ico" %}">
 
     {% block meta %}
-    <meta name="author" content="Shane Rice">
-    <meta name="title" content="SlashGIF">
-    <meta name="description" content="Search For and Preview Random GIFs Before Posting to Slack.">
-    <meta name="keywords" content="GIF search,random GIF,Slack GIF,GIF Preview,Slash GIF,SlashGIF,GIF,GIFS,Giphy,Slack">
+        <meta name="author" content="Shane Rice">
+        <meta name="title" content="SlashGIF">
+        <meta name="description" content="Search For and Preview Random GIFs Before Posting to Slack.">
+        <meta name="keywords" content="GIF search,random GIF,Slack GIF,GIF Preview,Slash GIF,SlashGIF,GIF,GIFS,Giphy,Slack">
+        <meta name="theme-color" content="#ffffd4">
 
-    <meta property="og:author" content="Shane Rice">
-    <meta property="og:title" content="SlashGIF">
-    <meta property="og:description" content="Search For and Preview Random GIFs Before Posting to Slack.">
+        <meta property="og:author" content="Shane Rice">
+        <meta property="og:title" content="SlashGIF">
+        <meta property="og:description" content="Search For and Preview Random GIFs Before Posting to Slack.">
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'home' %}">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'images/slashgif.png' %}">
-    <meta property="og:image:type" content="image/png">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'home' %}">
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'images/slashgif.png' %}">
+        <meta property="og:image:type" content="image/png">
     {% endblock %}
 
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
@@ -70,7 +71,7 @@
             <div class="p-3 m-3 bg-body-tertiary rounded-3">
                 <div class="row">
                     <div class="col-md-6">
-                        <p>
+                        <p class="mb-0 pb-0">
                             <span class="d-inline-block"><a href="{% url "home" %}">Home</a> |</span>
                             <span class="d-inline-block"><a href="{% url "support" %}">Support</a> |</span>
                             <span class="d-inline-block"><a href="{% url "privacy" %}">Privacy Policy</a> |</span>
@@ -78,7 +79,7 @@
                         </p>
                     </div>
                     <div class="col-md-6 text-md-end">
-                        <p>
+                        <p class="mb-0 pb-0">
                             <span class="d-inline-block"><strong>Shane Rice</strong> |</span>
                             <span class="d-inline-block"><script type="text/javascript" src="{% static "main/email/shane-email.js" %}"></script></span>
                         </p>
