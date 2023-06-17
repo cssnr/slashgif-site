@@ -47,12 +47,12 @@ pipeline {
             environment {
                 ENV_FILE = "deploy-configs/services/${SERVICE_NAME}/dev.env"
                 STACK_NAME = "dev_${BASE_NAME}"
-                DOCKER_PORT = "${DEV_PORT}"
+                TRAEFIK_HOST = "`dev.slashgif.com`"
             }
             steps {
                 echo "\n--- Starting Dev Deploy ---\n" +
                         "STACK_NAME:    ${STACK_NAME}\n" +
-                        "DOCKER_PORT:   ${DOCKER_PORT}\n" +
+                        "TRAEFIK_HOST:  ${TRAEFIK_HOST}\n" +
                         "ENV_FILE:      ${ENV_FILE}\n"
                 sendDiscord("${DISCORD_ID}", "Dev Deploy Started")
                 stackPush("${COMPOSE_FILE}")
@@ -70,12 +70,12 @@ pipeline {
             environment {
                 ENV_FILE = "deploy-configs/services/${SERVICE_NAME}/prod.env"
                 STACK_NAME = "prod_${BASE_NAME}"
-                DOCKER_PORT = "${PROD_PORT}"
+                TRAEFIK_HOST = "`slashgif.com`"
             }
             steps {
                 echo "\n--- Starting Prod Deploy ---\n" +
                         "STACK_NAME:    ${STACK_NAME}\n" +
-                        "DOCKER_PORT:   ${DOCKER_PORT}\n" +
+                        "TRAEFIK_HOST:  ${TRAEFIK_HOST}\n" +
                         "ENV_FILE:      ${ENV_FILE}\n"
                 sendDiscord("${DISCORD_ID}", "Prod Deploy Started")
                 stackPush("${COMPOSE_FILE}")
