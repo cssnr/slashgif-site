@@ -30,7 +30,9 @@ services:
       - net-internal
 
   app:
-    build: ./app
+    build:
+      context: ./app
+      network: host
     image: registry.hosted-domains.com/shane/slashgif-site-app:${VERSION}
     env_file: ${ENV_FILE}
     command: "gunicorn slashgif_site.wsgi:application -w 2 -b 0.0.0.0:9000"
