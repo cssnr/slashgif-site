@@ -4,22 +4,23 @@
 
 {% block body %}
 
-	<p class="h5 text-center">Allows you to search for a random GIF and preview it, before posting publicly.</p>
+	<p class="fs-3 text-center">Allows you to search for a random GIF and preview it, before posting publicly.</p>
 
+	<div class="container">
 	<div class="row">
-        <div class="col-lg-8 col-md-10 col-sm-12 mx-auto">
+        <div class="col-lg-8 col-md-10 col-sm-12 mx-auto p-3 m-3 bg-body-tertiary rounded-3">
 			<ul>
-				<li><strong>Slash Commands:</strong> Slash command <mark>/gif</mark> and
-                    <mark>/rif</mark> will be added for searching GIF's.</li>
+				<li><strong>Slash Commands:</strong> Slash command <kbd>/gif</kbd> and
+                    <kbd>/rif</kbd> will be added for searching GIF's.</li>
 				<li><strong>GIF Preview:</strong> Allows you to preview your GIF before sending it to the channel.</li>
 				<li><strong>Search Again:</strong> Instantly search for another GIF if you don't like the results.</li>
 				<ul>
 					<li>
-						<mark>/gif</mark> searches the Giphy Image API:
+						<kbd>/gif</kbd> searches the Giphy Image API:
                         <a href="http://giphy.com/" target="_blank">www.giphy.com</a>
 					</li>
 					<li>
-						<mark>/rif</mark> searches the Tenor Image API:
+						<kbd>/rif</kbd> searches the Tenor Image API:
                         <a href="https://www.tenor.co/" target="_blank">www.tenor.co</a>
 					</li>
 				</ul>
@@ -32,12 +33,13 @@
             <h3>Example:</h3>
 			<div class="card">
 				<div class="card-body">
-					<p><img src="{% static "images/gifs/example.gif" %}"
+					<p class="mb-0"><img src="{% static "images/gifs/example.gif" %}"
                             class="img-fluid mx-auto d-block"
                             alt="SlashGIF Example"></p>
 				</div>
 			</div>
 		</div>
+	</div>
 	</div>
 
 {% endblock %}

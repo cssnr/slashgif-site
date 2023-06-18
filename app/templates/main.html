@@ -2,29 +2,31 @@
 {% load home_tags %}
 
 <!doctype html>
-<html lang="en">
+<html lang="en" class="h-100">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-    {% get_config "DEBUG" as debug_enabled %}{% if debug_enabled %}<meta name="robots" content="noindex, nofollow">{% endif %}
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    {% get_config 'DEBUG' as debug_enabled %}{% if debug_enabled %}
+        <meta name="robots" content="noindex, nofollow">{% endif %}
 
     <title>SlashGIF - {% block title %}{% endblock %}</title>
     <link rel="icon" href="{% static "images/favicon.ico" %}">
 
     {% block meta %}
-    <meta name="author" content="Shane Rice">
-    <meta name="title" content="SlashGIF">
-    <meta name="description" content="Search For and Preview Random GIFs Before Posting to Slack.">
-    <meta name="keywords" content="GIF search,random GIF,Slack GIF,GIF Preview,Slash GIF,SlashGIF,GIF,GIFS,Giphy,Slack">
+        <meta name="author" content="Shane Rice">
+        <meta name="title" content="SlashGIF">
+        <meta name="description" content="Search For and Preview Random GIFs Before Posting to Slack.">
+        <meta name="keywords" content="GIF search,random GIF,Slack GIF,GIF Preview,Slash GIF,SlashGIF,GIF,GIFS,Giphy,Slack">
+        <meta name="theme-color" content="#ffffd4">
 
-    <meta property="og:author" content="Shane Rice">
-    <meta property="og:title" content="SlashGIF">
-    <meta property="og:description" content="Search For and Preview Random GIFs Before Posting to Slack.">
+        <meta property="og:author" content="Shane Rice">
+        <meta property="og:title" content="SlashGIF">
+        <meta property="og:description" content="Search For and Preview Random GIFs Before Posting to Slack.">
 
-    <meta property="og:type" content="website">
-    <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'home' %}">
-    <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'images/slashgif.png' %}">
-    <meta property="og:image:type" content="image/png">
+        <meta property="og:type" content="website">
+        <meta property="og:url" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% url 'home' %}">
+        <meta property="og:image" content="{{ request.scheme }}://{{ request.META.HTTP_HOST }}{% static 'images/slashgif.png' %}">
+        <meta property="og:image:type" content="image/png">
     {% endblock %}
 
     <link rel="stylesheet" href="{% static "bootstrap/css/bootstrap.min.css" %}">
@@ -34,50 +36,63 @@
 
     {% block head %}{% endblock %}
 </head>
-<body>
+<body class="d-flex flex-column h-100">
 
-<div class="container">
-    {% block header %}
-    <div class="jumbotron mt-2">
-        <a href="{% url 'home' %}" title="SlashGIF">
-            <img height="128" width="128" src="{% static "images/slashgif.png" %}"
-                 class="float-right" alt="SlashGIF"></a>
-        <h1>SlashGIF</h1>
-        <p class="h4">Random GIF Search and Preview for Slack...</p>
-        <p><a href="{% url "addtoslack" %}">
-            <img src="{% static "images/add_to_slack.png" %}" alt="Add to Slack">
-        </a></p>
+{% block header %}
+    <header>
+        <div class="container-fluid">
+        <div class="p-3 m-3 bg-body-tertiary rounded-3">
+            <div class="container-fluid py-2">
+                <a href="{% url 'home' %}" title="SlashGIF">
+                    <img height="128" width="128" src="{% static "images/slashgif.png" %}"
+                         class="float-md-end" alt="SlashGIF"></a>
+                <h1 class="display-5 fw-bold">SlashGIF</h1>
+                <p class="fs-4">Random GIF Search <span class="d-inline-block">and Preview for Slack.</span></p>
+                <p><a href="{% url "addtoslack" %}">
+                    <img src="{% static "images/add_to_slack.png" %}" alt="Add to Slack">
+                </a></p>
+            </div>
+        </div>
+        </div>
+    </header>
+{% endblock %}
+
+<main class="flex-shrink-0">
+    <div class="container">
+        <div class="p-3">
+            {% block body %}{% endblock %}
+        </div>
     </div>
-    {% endblock %}
+</main>
 
-    {% block body %}{% endblock %}
-
-    {% block footer %}
-    <div class="card mt-3">
-        <div class="card-body">
-            <div class="row">
-                <div class="col-sm-6">
-                    <p>
-                        <a href="{% url "home" %}">Home</a> |
-                        <a href="{% url "support" %}">Support</a> |
-                        <a href="{% url "privacy" %}">Privacy Policy</a> |
-                        <a href="{% get_config 'SLACK_APP_URL' %}" target="_blank">View at Slack</a>
-                    </p>
-                </div>
-
-                <div class="col-sm-6">
-                    <p class="text-right"><strong>Shane Rice</strong> |
-                        <script type="text/javascript" src="{% static "main/email/shane-email.js" %}"></script>
-                    </p>
+{% block footer %}
+    <footer class="footer mt-auto">
+        <div class="container-fluid">
+            <div class="p-3 m-3 bg-body-tertiary rounded-3">
+                <div class="row">
+                    <div class="col-md-6">
+                        <p class="mb-0 pb-0">
+                            <span class="d-inline-block"><a href="{% url "home" %}">Home</a> |</span>
+                            <span class="d-inline-block"><a href="{% url "support" %}">Support</a> |</span>
+                            <span class="d-inline-block"><a href="{% url "privacy" %}">Privacy Policy</a> |</span>
+                            <span class="d-inline-block"><a href="{% get_config 'SLACK_APP_URL' %}" target="_blank">View at Slack</a></span>
+                        </p>
+                    </div>
+                    <div class="col-md-6 text-md-end">
+                        <p class="mb-0 pb-0">
+                            <span class="d-inline-block"><strong>Shane Rice</strong> |</span>
+                            <span class="d-inline-block"><script type="text/javascript" src="{% static "main/email/shane-email.js" %}"></script></span>
+                        </p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    {% endblock %}
-</div>
+    </footer>
+{% endblock %}
 
 <script type="text/javascript" src="{% static 'jquery/jquery.min.js' %}"></script>
-<script type="text/javascript" src="{% static "bootstrap/js/bootstrap.min.js" %}"></script>
+<script type="text/javascript" src="{% static "bootstrap/js/bootstrap.bundle.min.js" %}"></script>
+<script type="text/javascript" src="{% static "main/js/theme.js" %}"></script>
 
 {% block tail %}{% endblock %}
 
