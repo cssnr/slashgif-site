@@ -68,7 +68,7 @@ pipeline {
                 }
             }
             environment {
-                ENV_FILE = "deploy-configs/services/${SERVICE_NAME}/prod.env"
+                ENV_FILE = "service-configs/services/${SERVICE_NAME}/prod.env"
                 STACK_NAME = "prod_${BASE_NAME}"
                 TRAEFIK_HOST = "`slashgif.com`"
             }
