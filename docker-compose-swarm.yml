@@ -5,10 +5,14 @@ services:
     build:
       context: ./nginx
       network: host
-    image: registry.hosted-domains.com/shane/slashgif-site-nginx:${VERSION}
+    image: ${REGISTRY_HOST}/shane/slashgif-site-nginx:${VERSION}
     env_file: ${ENV_FILE}
     deploy:
       mode: global
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 50M
       labels:
         - "traefik.enable=true"
         - "traefik.docker.network=traefik-public"
@@ -33,11 +37,21 @@ services:
     build:
       context: ./app
       network: host
-    image: registry.hosted-domains.com/shane/slashgif-site-app:${VERSION}
+    image: ${REGISTRY_HOST}/shane/slashgif-site-app:${VERSION}
     env_file: ${ENV_FILE}
     command: "gunicorn slashgif_site.wsgi:application -w 2 -b 0.0.0.0:9000"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:9000/app-health-check/"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 10s
     deploy:
       mode: global
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 200M
     volumes:
       - data_dir:/data
     networks:

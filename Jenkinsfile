@@ -13,6 +13,7 @@ pipeline {
     environment {
         DISCORD_ID = "discord-hook-smashed"
         COMPOSE_FILE = "docker-compose-swarm.yml"
+        REGISTRY_HOST = "registry.hosted-domains.com"
 
         BUILD_CAUSE = getBuildCause()
         VERSION = getVersion("${GIT_BRANCH}")
@@ -21,15 +22,18 @@ pipeline {
 
         BASE_NAME = "${GIT_ORG}-${GIT_REPO}"
         SERVICE_NAME = "${BASE_NAME}"
+        CONFIG_NAME = "${BASE_NAME}"
     }
     stages {
         stage('Init') {
             steps {
                 echo "\n--- Build Details ---\n" +
-                        "GIT_URL:       ${GIT_URL}\n" +
                         "JOB_NAME:      ${JOB_NAME}\n" +
-                        "SERVICE_NAME:  ${SERVICE_NAME}\n" +
+                        "GIT_URL:       ${GIT_URL}\n" +
                         "BASE_NAME:     ${BASE_NAME}\n" +
+                        "SERVICE_NAME:  ${SERVICE_NAME}\n" +
+                        "CONFIG_NAME:   ${CONFIG_NAME}\n" +
+                        "REGISTRY_HOST: ${REGISTRY_HOST}\n" +
                         "BUILD_CAUSE:   ${BUILD_CAUSE}\n" +
                         "GIT_BRANCH:    ${GIT_BRANCH}\n" +
                         "VERSION:       ${VERSION}\n"
@@ -45,20 +49,21 @@ pipeline {
                 }
             }
             environment {
-                ENV_FILE = "service-configs/services/${SERVICE_NAME}/dev.env"
-                STACK_NAME = "dev_${BASE_NAME}"
+                ENV_NAME = "dev"
+                ENV_FILE = "service-configs/services/${CONFIG_NAME}/${ENV_NAME}.env"
+                STACK_NAME = "${ENV_NAME}_${SERVICE_NAME}"
                 TRAEFIK_HOST = "`dev.slashgif.com`"
             }
             steps {
-                echo "\n--- Starting Dev Deploy ---\n" +
-                        "STACK_NAME:    ${STACK_NAME}\n" +
-                        "TRAEFIK_HOST:  ${TRAEFIK_HOST}\n" +
-                        "ENV_FILE:      ${ENV_FILE}\n"
-                sendDiscord("${DISCORD_ID}", "Dev Deploy Started")
+                echo "\n--- Starting ${ENV_NAME} Deploy ---\n" +
+                        "STACK_NAME:        ${STACK_NAME}\n" +
+                        "TRAEFIK_HOST:      ${TRAEFIK_HOST}\n" +
+                        "ENV_FILE:          ${ENV_FILE}\n"
+                sendDiscord("${DISCORD_ID}", "${ENV_NAME} Deploy Started")
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
                 stackDeploy("${COMPOSE_FILE}", "${STACK_NAME}")
-                sendDiscord("${DISCORD_ID}", "Dev Deploy Finished")
+                sendDiscord("${DISCORD_ID}", "${ENV_NAME} Deploy Finished")
             }
         }
         stage('Prod Deploy') {
@@ -69,20 +74,21 @@ pipeline {
                 }
             }
             environment {
-                ENV_FILE = "service-configs/services/${SERVICE_NAME}/prod.env"
-                STACK_NAME = "prod_${BASE_NAME}"
+                ENV_NAME = "prod"
+                ENV_FILE = "service-configs/services/${CONFIG_NAME}/${ENV_NAME}.env"
+                STACK_NAME = "${ENV_NAME}_${SERVICE_NAME}"
                 TRAEFIK_HOST = "`slashgif.com`"
             }
             steps {
-                echo "\n--- Starting Prod Deploy ---\n" +
-                        "STACK_NAME:    ${STACK_NAME}\n" +
-                        "TRAEFIK_HOST:  ${TRAEFIK_HOST}\n" +
-                        "ENV_FILE:      ${ENV_FILE}\n"
-                sendDiscord("${DISCORD_ID}", "Prod Deploy Started")
+                echo "\n--- Starting ${ENV_NAME} Deploy ---\n" +
+                        "STACK_NAME:        ${STACK_NAME}\n" +
+                        "TRAEFIK_HOST:      ${TRAEFIK_HOST}\n" +
+                        "ENV_FILE:          ${ENV_FILE}\n"
+                sendDiscord("${DISCORD_ID}", "${ENV_NAME} Deploy Started")
                 updateCompose("${COMPOSE_FILE}", "STACK_NAME", "${STACK_NAME}")
                 stackPush("${COMPOSE_FILE}")
                 stackDeploy("${COMPOSE_FILE}", "${STACK_NAME}")
-                sendDiscord("${DISCORD_ID}", "Prod Deploy Finished")
+                sendDiscord("${DISCORD_ID}", "${ENV_NAME} Deploy Finished")
             }
         }
     }
