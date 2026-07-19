@@ -25,7 +25,11 @@ services:
         - "traefik.http.services.${STACK_NAME}.loadbalancer.server.port=80"
         - "traefik.http.services.${STACK_NAME}.loadbalancer.server.scheme=http"
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/health-check || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://127.0.0.1/health-check || exit 1",
+        ]
       interval: 10s
       timeout: 10s
       retries: 3
@@ -45,7 +49,7 @@ services:
     image: ghcr.io/cssnr/slashgif-site-app:${VERSION:-latest}
     environment: &environment
       DJANGO_LOG_LEVEL: ${DJANGO_LOG_LEVEL}
-      APP_LOG_LEVEL: ${APP_LOG_LEVEL}
+      DJANGO_APP_LOG_LEVEL: ${DJANGO_APP_LOG_LEVEL}
       DJANGO_DEBUG: ${DJANGO_DEBUG}
       DJANGO_ALLOWED: ${DJANGO_ALLOWED}
       DJANGO_SESSION: ${DJANGO_SESSION}

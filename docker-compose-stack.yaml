@@ -11,7 +11,11 @@ services:
           cpus: "1.0"
           memory: 32M
     healthcheck:
-      test: ["CMD-SHELL", "wget -q -O /dev/null http://127.0.0.1/health-check || exit 1"]
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://127.0.0.1/health-check || exit 1",
+        ]
       interval: 10s
       timeout: 10s
       retries: 3
