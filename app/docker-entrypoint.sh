@@ -2,13 +2,14 @@
 
 set -ex
 
-if echo "${*}" | grep -q "gun";then
+if echo "${*}" | grep -q "gun\|runserver";then
     if [ -n "${DJANGO_SUPERUSER_PASSWORD}" ] &&
     [ -n "${DJANGO_SUPERUSER_USERNAME}" ] &&
     [ -n "${DJANGO_SUPERUSER_EMAIL}" ];then
-        python manage.py createsuperuser --noinput || :
+        uv run python manage.py createsuperuser --noinput || :
     fi
-    python manage.py collectstatic --noinput
+    #uv run python manage.py migrate --noinput
+    uv run python manage.py collectstatic --noinput -v 0
 fi
 
 exec "$@"

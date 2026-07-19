@@ -1,9 +1,22 @@
+# Generic
 .idea/
 *.iml
-**/venv/
-**/__pycache__/
+.vscode/
+.venv/
+venv/
+__pycache__/
+*.egg-info/
+node_modules/
+build/
+dist/
+.*cache
+*.log
 *.pyc
 .coverage
-*.log
-*.sqlite3
+coverage.xml
+# App
+.env
+.secrets
+.vars
 settings.env
+*.sqlite3

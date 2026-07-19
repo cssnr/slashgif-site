@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  nginx:
+    image: ghcr.io/cssnr/slashgif-site-nginx:${VERSION:-latest}
+    env_file: settings.env
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 32M
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "wget -q -O /dev/null http://127.0.0.1/health-check || exit 1",
+        ]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - data_dir:/data
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+
+  app:
+    image: ghcr.io/cssnr/slashgif-site-app:${VERSION:-latest}
+    env_file: settings.env
+    command: "gunicorn slashgif_site.wsgi:application -b 0.0.0.0:9000 -w 2"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:9000/app-health-check/"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 200M
+    volumes:
+      - data_dir:/data
+
+volumes:
+  data_dir:
