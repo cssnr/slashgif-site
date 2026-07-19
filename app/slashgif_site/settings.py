@@ -92,7 +92,7 @@ LOGGING = {
         },
         "app": {
             "handlers": ["console"],
-            "level": config("APP_LOG_LEVEL", "DEBUG"),
+            "level": config("DJANGO_APP_LOG_LEVEL", "DEBUG"),
             "propagate": True,
         },
     },
