@@ -1,0 +1,9 @@
+extends: relaxed
+
+ignore:
+  - "node_modules/"
+  - "**/templates/"
+
+rules:
+  line-length:
+    max: 119

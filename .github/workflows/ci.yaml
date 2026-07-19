@@ -1,0 +1,110 @@
+name: "CI"
+
+on:
+  workflow_dispatch:
+    inputs:
+      build:
+        description: "Run Build"
+        type: boolean
+        default: true
+      deploy:
+        description: "Run Deploy"
+        type: boolean
+        default: true
+      cleanup:
+        description: "Run Cleanup"
+        type: boolean
+        default: true
+      env:
+        description: "Environment to Deploy"
+        required: true
+        default: "dev"
+        type: choice
+        options:
+          - dev
+          - prod
+
+  push:
+    branches-ignore:
+      - master
+    paths:
+      - ".github/workflows/ci.yaml"
+      - "app/**"
+      - "nginx/**"
+      - "docker-compose-swarm.yaml"
+      - "pyproject.toml"
+      - "uv.lock"
+
+env:
+  config-path: cssnr-slashgif-site
+  stack-name: ${{ inputs.env || 'dev' }}_${{ github.repository_owner }}-${{ github.event.repository.name }}
+  env-name: ${{ inputs.env || 'dev' }}
+  build: ${{ github.event_name == 'push' && true || inputs.build }}
+  deploy: ${{ github.event_name == 'push' && true || inputs.deploy }}
+  cleanup: ${{ github.event_name == 'push' && true || inputs.cleanup }}
+
+concurrency:
+  group: ${{ inputs.env || 'dev' }}
+  cancel-in-progress: true
+
+jobs:
+  ci:
+    name: "CI"
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    if: ${{ !contains(github.event.head_commit.message, '#noci') }}
+    concurrency:
+      group: ci
+      cancel-in-progress: true
+    permissions:
+      contents: read
+      packages: write
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+
+      - name: "Debug event.json"
+        continue-on-error: true
+        run: cat "${GITHUB_EVENT_PATH}"
+      - name: "Debug CTX github"
+        continue-on-error: true
+        env:
+          GITHUB_CTX: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CTX"
+
+      - name: "Debug"
+        continue-on-error: true
+        run: |
+          echo group: ${{ inputs.env || 'dev' }}
+          echo github.event_name: ${{ github.event_name }}
+
+          echo inputs.build: ${{ inputs.build }}
+          echo inputs.deploy: ${{ inputs.deploy }}
+          echo inputs.cleanup: ${{ inputs.cleanup }}
+
+          echo env.build: ${{ env.build }}
+          echo env.deploy: ${{ env.deploy }}
+          echo env.cleanup: ${{ env.cleanup }}
+
+          echo env.stack-name: ${{ env.stack-name }}
+          echo env.env-name: ${{ env.env-name }}
+
+      - name: "Swarm Build Action"
+        if: ${{ env.build == 'true' }}
+        uses: hosted-domains/swarm-build-action@master
+        with:
+          version: ${{ env.env-name }}
+          username: ${{ vars.GHCR_USER }}
+          password: ${{ secrets.GHCR_PASS }}
+
+      - name: "Portainer Deploy Action"
+        if: ${{ env.deploy == 'true' }}
+        uses: hosted-domains/portainer-deploy-action@master
+        with:
+          version: ${{ env.env-name }}
+          stack-name: ${{ env.stack-name }}
+          config-file: services/${{ env.config-path }}/${{ env.env-name }}.env
+          config-ssh-key: ${{ secrets.SERVICE_CONFIGS_KEY }}
+          portainer-url: ${{ secrets.PORTAINER_URL }}
+          portainer-token: ${{ secrets.PORTAINER_TOKEN }}

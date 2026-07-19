@@ -1,0 +1,68 @@
+version: "3.8"
+
+services:
+  nginx:
+    build: nginx
+    image: slashgif-site-nginx:latest
+    env_file: settings.env
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 32M
+    healthcheck:
+      test: ["CMD-SHELL", "curl -sf localhost:80/health-check || exit 1"]
+      interval: 10s
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    volumes:
+      - data_dir:/data
+    depends_on:
+      - app
+    ports:
+      - "80:80"
+    develop:
+      watch:
+        - action: rebuild
+          path: nginx
+
+  app:
+    build:
+      context: .
+      dockerfile: ./app/Dockerfile
+    image: slashgif-site-app:latest
+    env_file: settings.env
+    command: "gunicorn slashgif_site.wsgi:application -b 0.0.0.0:9000 -w 2"
+    healthcheck:
+      test: ["CMD", "curl", "-sf", "http://localhost:9000/app-health-check/"]
+      interval: 1m
+      timeout: 10s
+      retries: 3
+      start_period: 10s
+    deploy:
+      mode: global
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 200M
+    volumes:
+      - data_dir:/data
+    develop:
+      watch:
+        - action: sync
+          path: app
+          target: app
+        - action: sync+exec
+          path: app/static
+          target: app/static
+          exec:
+            command: "uv run python manage.py collectstatic --noinput -v 0"
+        - action: rebuild
+          path: pyproject.toml
+        - action: rebuild
+          path: uv.lock
+
+volumes:
+  data_dir:

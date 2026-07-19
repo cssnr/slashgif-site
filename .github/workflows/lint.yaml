@@ -1,0 +1,131 @@
+name: "Lint"
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [master]
+    paths-ignore:
+      - "app/static/**"
+      - "*.env*"
+      - "nginx/nginx.conf"
+      - ".dockerignore"
+      - ".gitattributes"
+      - ".gitignore"
+      - ".prettierignore"
+      - "uv.lock"
+  pull_request:
+    branches: [master]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  lint:
+    name: "Lint"
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    if: ${{ !contains(github.event.head_commit.message, '#nolint') }}
+
+    permissions:
+      contents: read
+
+    steps:
+      - name: "Checkout"
+        uses: actions/checkout@v6
+
+      - name: "Debug event.json"
+        continue-on-error: true
+        run: cat "${GITHUB_EVENT_PATH}"
+      - name: "Debug CTX github"
+        continue-on-error: true
+        env:
+          GITHUB_CTX: ${{ toJSON(github) }}
+        run: echo "$GITHUB_CTX"
+
+      - name: "Install UV"
+        uses: astral-sh/setup-uv@61cb8a9741eeb8a550a1b8544337180c0fc8476b # v7.2.0
+
+      - name: "Install Python"
+        run: |
+          uv python install
+
+      - name: "Install Project"
+        run: |
+          uv sync --locked --all-extras --dev
+
+      - name: "Debug UV"
+        continue-on-error: true
+        run: |
+          uv python dir
+          uv python find
+          uv run python -V
+          echo "::group::uv tree"
+          uv tree
+          echo "::endgroup::"
+          echo "::group::uv pip list"
+          uv pip list
+          echo "::endgroup::"
+
+      - name: "astral-sh/ruff"
+        if: ${{ !cancelled() }}
+        uses: astral-sh/ruff-action@57714a7c8a2e59f32539362ba31877a1957dded1 # v3.5.1
+        with:
+          version: latest
+
+      - name: "astral-sh/ty"
+        continue-on-error: true
+        if: ${{ !cancelled() }}
+        run: |
+          uv run ty check -v
+
+      - name: "psf/black"
+        if: ${{ !cancelled() }}
+        uses: psf/black@stable
+
+      - name: "isort"
+        if: ${{ !cancelled() }}
+        uses: isort/isort-action@24d8a7a51d33ca7f36c3f23598dafa33f7071326 # v1.1.1
+
+      - name: "mypy"
+        continue-on-error: true
+        if: ${{ !cancelled() }}
+        run: |
+          uvx toml-run mypy
+
+      - name: "bandit"
+        if: ${{ !cancelled() }}
+        run: |
+          uvx toml-run bandit
+
+      - name: "tombi"
+        if: ${{ !cancelled() }}
+        run: |
+          uv run tombi lint
+
+      - name: "yamllint"
+        if: ${{ !cancelled() }}
+        run: |
+          uvx toml-run yamllint
+
+      - name: "prettier"
+        if: ${{ !cancelled() }}
+        run: |
+          echo "::group::Install"
+          npm install prettier
+          echo "::endgroup::"
+          npx prettier --check .
+
+      - name: "actionlint"
+        if: ${{ !cancelled() }}
+        uses: cssnr/actionlint-action@v1
+        with:
+          shellcheck_opts: -e SC2012
+
+      - name: "Hadolint"
+        if: ${{ !cancelled() }}
+        uses: hadolint/hadolint-action@v3.1.0
+        with:
+          dockerfile: Dockerfile
+          recursive: true
+          ignore: DL3013,DL3018
